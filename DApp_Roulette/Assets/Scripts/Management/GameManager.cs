@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private User user = new User(new BigInteger(0), "");
     private int bettingType;
-    private float bettingValue;
+    private BigInteger bettingValue;
 
     #region Setting
     private GameManager()
@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
 
     public void SetUser(User _user)
     {
-        // Debug.Assert(user.balance != -1, "Assert : Wrong balance : [" + user.balance + "] balance must bigger than -1");
         user = _user;
         chipCountUI.init();
     }
@@ -49,7 +48,7 @@ public class GameManager : MonoBehaviour
     }
 
     private int betResult = 0;
-    public void Bet(float _bettingValue)
+    public void Bet(BigInteger _bettingValue)
     {
         bettingValue = _bettingValue;
 
@@ -69,11 +68,10 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case eGameState.BETTING:
-                //���� ������ ����
-                //�׳� Block UI�� �۵� ���ϴ� ���¶�� �����ϸ� ��
+
                 break;
             case eGameState.WAITING_GAME_RESULT:
-                if (betResult != 0) // 0�� �ƴϸ� �ݹ� js �ڵ尡 ������
+                if (betResult != 0) //wait for js return game result
                 {
                     gameResultUI.ResultSettingBy(betResult);
                     gameResultUI.gameObject.SetActive(true);
@@ -85,14 +83,13 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case eGameState.RESULT:
-                //������ �ް� ���û��·� switch�ϱ�
                 break;
         }
     }
 
     public void SwitchGameStateToBetting()
     { 
-        chipCountUI.UpdateCnt(betResult); //����� Update
+        chipCountUI.UpdateCnt(betResult); 
         bettingType = -1;
         bettingValue = -1;
         betResult = 0;

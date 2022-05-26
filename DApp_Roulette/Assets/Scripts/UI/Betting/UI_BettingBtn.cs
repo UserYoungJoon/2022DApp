@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Numerics;
+
 public class UI_BettingBtn : MonoBehaviour
 {
     public GameObject ErrorUI;
@@ -16,9 +18,9 @@ public class UI_BettingBtn : MonoBehaviour
 
     public void Bet()
     {
-        float tryBetting = float.Parse(bettingValue.text);
+        BigInteger tryBetting = BigInteger.Parse(bettingValue.text);//.Parse(bettingValue.text);
         if (tryBetting > 0.0f /* && user.balance > tryBetting */)
-        {//�� �ɰų� �ִ°ź��� �� ���� �ɷ��� ���� �ʴ´ٸ�
+        {
             GameManager.instance.Bet(tryBetting);
             bettingUI.gameObject.SetActive(false);
         }
