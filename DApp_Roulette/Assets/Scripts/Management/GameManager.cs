@@ -52,10 +52,9 @@ public class GameManager : MonoBehaviour
     {
         bettingValue = _bettingValue;
 
-        Thread thread = new Thread(async () => { //������ join �ǰ��� ��...
-            //betResult = await �ڹٽ�ũ��Ʈ�Լ�(bettingType, bettingValue);
-        });
 
+
+        rouletteUI.SetActive(true);
         gameState = eGameState.WAITING_GAME_RESULT;
     }
     #endregion Betting System
@@ -63,6 +62,7 @@ public class GameManager : MonoBehaviour
 
     private enum eGameState { BETTING, WAITING_GAME_RESULT, RESULT }
     private eGameState gameState = eGameState.BETTING;
+    public GameObject rouletteUI;
     private void Update()
     {
         switch (gameState)
@@ -73,13 +73,11 @@ public class GameManager : MonoBehaviour
             case eGameState.WAITING_GAME_RESULT:
                 if (betResult != 0) //wait for js return game result
                 {
+                    rouletteUI.SetActive(false);
+
                     gameResultUI.ResultSettingBy(betResult);
                     gameResultUI.gameObject.SetActive(true);
                     gameState = eGameState.RESULT;
-                }
-                else
-                {
-                    // RotateRoulette();
                 }
                 break;
             case eGameState.RESULT:
